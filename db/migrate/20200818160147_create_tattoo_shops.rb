@@ -1,6 +1,6 @@
 class CreateTattooShops < ActiveRecord::Migration[5.2]
   def change
-    create_table :tattooshops do |t|
+    create_table :tattoo_shops do |t|
       t.string :name
       t.string :location
       t.float :average_review

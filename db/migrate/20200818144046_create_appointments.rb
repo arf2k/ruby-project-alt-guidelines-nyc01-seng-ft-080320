@@ -5,7 +5,7 @@ class CreateAppointments < ActiveRecord::Migration[5.2]
       t.string :time 
       t.string :description
       t.integer :artist_id 
-      t.integer :tattooshop_id 
+      t.integer :tattoo_shop_id 
       t.integer :client_id 
     end
   end

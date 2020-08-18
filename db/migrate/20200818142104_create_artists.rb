@@ -4,7 +4,7 @@ class CreateArtists < ActiveRecord::Migration[5.2]
       t.string :name 
       t.string :style 
       t.boolean :does_piercings?
-      t.integer :tattooshop_id  
+      t.integer :tattoo_shop_id  
     end
   end
 end
