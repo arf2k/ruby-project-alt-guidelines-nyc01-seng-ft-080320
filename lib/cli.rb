@@ -37,6 +37,7 @@ prompt = TTY::Prompt.new(active_color: :red)
     elsif been_here_before == false  
         newclient = prompt.ask("No worries, we just need to set you up in our system. Can you give us your name?", required: true){|q| q.modify :capitalize}
         created_new_client = Client.create(name:newclient)
+        Client.remember_current_client(created_new_client.id)
         #binding.pry
         prompt.ask("Great! Welcome, #{newclient}! Your client id is #{created_new_client.id}. Please store your id number somewhere safe for the future! Let's get started.")
         menu_options
@@ -46,7 +47,7 @@ end
 def menu_options
 prompt = TTY::Prompt.new(active_color: :red)
     #client should also be given option to look at database of artists
-    initialpromptoptions = ["Look for an artist", "Make an appointment", "Change or Delete appointment"]
+    initialpromptoptions = ["Look for an artist", "Make an appointment", "Change or cancel appointment", "General Search"]
     selectedoption = prompt.select("What would you like to do?", initialpromptoptions)
     
     if selectedoption == initialpromptoptions[0] 
@@ -55,29 +56,13 @@ prompt = TTY::Prompt.new(active_color: :red)
         make_an_appointment 
     elsif selectedoption == initialpromptoptions[2]
         change_appointment #should be able to look up appointments that exist and change them. 
+    elsif selectedoption == initialpromptoptions[3]
+        general_search
     end
     
 end
 
 
-def help_search
-prompt = TTY::Prompt.new
-    prompt.ask("No worries, though – we'll help you find the right person for you.")
-    filter_options = ["Style", "Location", "Wanna get a piercing, too?"]
-    chosen_filter = prompt.select("How would you like to filter your search?",filter_options)
-
-    if chosen_filter[0]
-        Artists.all.select do |artists|
-            
-        end
-
-    elsif chosen_filter[1]
-
-    elsif chosen_filter[2]
-
-    end
-
-end
 
 # Artist.all.select do |artists| 
 #     if artists.style == stylechosen
