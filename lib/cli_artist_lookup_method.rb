@@ -26,7 +26,7 @@ def artist_lookup
                             elsif 
                                 var == false
                                 prompt.ask("Okay – Let's start over!")
-                                #search
+                                #build out this function to somehow go back to getting the appointment information above. 
                             end      
                      
                 elsif make_appt == false
