@@ -1,9 +1,5 @@
 require 'pry'
 
-
-require 'pry'
-
-
 def make_an_appointment
 prompt = TTY::Prompt.new
     
