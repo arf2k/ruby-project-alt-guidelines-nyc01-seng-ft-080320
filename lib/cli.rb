@@ -1,9 +1,6 @@
 require 'pry'
 
 
-require 'pry'
-
-
 def make_an_appointment
 prompt = TTY::Prompt.new
     
@@ -29,12 +26,26 @@ end
 def welcoming_new_client
 prompt = TTY::Prompt.new(active_color: :red)
 
-    newclient = prompt.ask("Welcome to TattedPortal! What's your name?", required: true){|q| q.modify :capitalize}
-    Client.create(name:newclient)
-    prompt.ask("Great! Welcome, #{newclient}. Let's get started.")
-    
-    
-    initialpromptoptions = ["Look for an artist", "Make an appointment", "Change appointment"]
+     prompt.ask("Welcome to TattedPortal!")
+     been_here_before = prompt.yes?("Have you been to TattedPortal before?")
+    if been_here_before == true
+        id = prompt.ask("Great – whats your client id", required: true) 
+        existing_client = Client.all.find_by id: id
+        prompt.ask("Welcome back #{existing_client.name}") #configure option for when client cant be found
+        menu_options                                          #also if they cant remember id
+    elsif been_here_before == false  
+        newclient = prompt.ask("No worries, we just need to set you up in our system. Can you give us your name?", required: true){|q| q.modify :capitalize}
+        created_new_client = Client.create(name:newclient)
+        binding.pry
+        prompt.ask("Great! Welcome, #{newclient}! Your client id is #{created_new_client.id}. Please store your id number somewhere safe for the future! Let's get started.")
+        menu_options
+    end
+end
+
+def menu_options
+prompt = TTY::Prompt.new(active_color: :red)
+    #client should also be given option to look at database of artists
+    initialpromptoptions = ["Look for an artist", "Make an appointment", "Change or Delete appointment"]
     selectedoption = prompt.select("What would you like to do?", initialpromptoptions)
     
     if selectedoption == initialpromptoptions[0] 
@@ -42,9 +53,9 @@ prompt = TTY::Prompt.new(active_color: :red)
     elsif selectedoption == initialpromptoptions[1]
         make_an_appointment 
     elsif selectedoption == initialpromptoptions[2]
-        change_appointment
+        change_appointment #should be able to look up appointments that exist and change them. 
     end
-
+    
 end
 
 def artist_lookup

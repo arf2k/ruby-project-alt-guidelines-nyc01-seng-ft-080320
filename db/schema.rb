@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_160147) do
+ActiveRecord::Schema.define(version: 2020_08_20_123917) do
 
   create_table "appointments", force: :cascade do |t|
-    t.string "date"
-    t.string "time"
+    t.date "date"
+    t.time "time"
     t.string "description"
     t.integer "artist_id"
     t.integer "tattoo_shop_id"
@@ -45,11 +45,8 @@ ActiveRecord::Schema.define(version: 2020_08_18_160147) do
   create_table "tattoo_shops", force: :cascade do |t|
     t.string "name"
     t.string "location"
-    t.float "average_review"
     t.string "ambiance"
     t.string "operational_hours"
-    t.boolean "does_piercings?"
-    t.boolean "recommended?"
   end
 
 end
