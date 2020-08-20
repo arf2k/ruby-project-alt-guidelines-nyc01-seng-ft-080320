@@ -1,18 +1,20 @@
 def change_appointment 
     prompt = TTY::Prompt.new
-    #client_id = prompt.ask("Enter your id one more time:", required: true)
-    #client_appointments = []
-    # client_appointments = Appointment.all.map do |appt|
-    #     appt.client.id == Client.current_client 
-    client_appointments = Appointment.all.find_by client: Client.current_client 
-    # client_appointments.client_id.name 
-    prompt.ask("#{client_appointments.client.name}, we found your appointment on #{client_appointments.date}")
 
-    prompt.collect do
+    client_appointments = Appointment.all.find_by client: Client.current_client 
+
+    prompt.ask("#{client_appointments.client.name}, we found your appointment on #{client_appointments.date} at #{client_appointments.tattoo_shop.name}")
+    options = ["Change Appointment", "Delete Appointment"]
+    selected_option = prompt.select("Would you like to change or delete?", options)
+    if selected_option == options[0]
+        prompt.ask("Great. Please answer a few questions:")
+        prompt.collect do
         new_date = key(:date).ask("What day should we set your new appointment?", required: true)
         new_time = key(:time).ask("Got it. What time?", required: true)
         new_description = key(:description).ask("Please verify the work you would like done by providing a description", required: true)
+        client_appointments[date: new_date, time: new_time, description: new_description]
         prompt.ask("#{client_appointments.client.name}, we will now see you on #{new_date} at #{new_time} to get your #{new_description}")
+        end
     end
      
               
