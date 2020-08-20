@@ -1,6 +1,9 @@
 require 'pry'
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9cfa8f921afd43c87a86ff559ac1e9dd2bf70bfe
 def make_an_appointment
 prompt = TTY::Prompt.new
     
