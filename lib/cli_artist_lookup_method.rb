@@ -1,51 +1,47 @@
 def artist_lookup
     prompt = TTY::Prompt.new
     pastel = Pastel.new
-                
+    whats_their_name = ""
         artistname = prompt.ask("Do you know their name? We'll check it against our database of artists!") {|q| q.modify :capitalize}
                     
             if Artist.all.find_by name: artistname
-                whats_their_name_answer = Artist.all.find_by name: artistname
+                whats_their_name = Artist.all.find_by name: artistname
                 make_appt = prompt.yes?("Found them! Nice! We love #{artistname}. Would you like to make an appointment with them?")
 
                 if make_appt == true
-                    prompt.collect do
-                        appointment_details
-                    end
-                            if var == true
-                                newappt.save
-                                
-                            elsif var == false #no, client wants to change details given in line 18
-                                prompt.ask("Let's try again!")
-                                appointment_details
-                            end
-                elsif make_appt == false
-                    other_options = ["Just checking out TattedPortal."]#Just checking out TattedPortal.make respondant method that exits out of program
-                    prompt.ask("Okay, no problem. Have a great one!")#code here for when artist is found in database but appt is not desired 
-                end
-            else prompt.ask("Hmm...")#first if correspondant
-                prompt.ask("We dont know 'em!")
-                help_search
-            end
-end#ends first if
-    
-def appointment_details
-    prompt = TTY::Prompt.new
-    description = key(:description).ask("Tell us what work you'd like done.", required: true)
+                        search = prompt.collect do
+                        description = key(:description).ask("Tell us what work you'd like done.", required: true)
                         date = key(:date).ask("And when were you planning on comming in? Month, day, and year please!", required: true)
                         prompt.ask("Sweet, thanks #{Client.all.last.name}! We're gonna run it back to you so you can let us know if there's anything we missed:")
-                        prompt.ask("Your name is #{Client.all.last.name}, and your artist's name is #{artistname}...")
-                        prompt.ask("And we've got you down for #{date} at #{whats_their_name_answer.tattoo_shop.name} in #{whats_their_name_answer.tattoo_shop.location} and you told us you wanted: #{description}.")
+                        prompt.ask("Your name is #{Client.all.last.name}, and your artist's name is #{whats_their_name.name}...")
+                        prompt.ask("And we've got you down for #{date} at #{whats_their_name.tattoo_shop.name} in #{whats_their_name.tattoo_shop.location} and you told us you wanted: #{description}.")
+                        #binding.pry
+                        newappt = Appointment.new(client: Client.all.last, date: date, description: description, artist:  whats_their_name, tattoo_shop: whats_their_name.tattoo_shop)
+                        end
                         var = prompt.yes?("Does this all check out with you?")
-                        newappt = Appointment.new(client: Client.all.last, date: date, description: description, artist: whats_their_name_answer, tattoo_shop: whats_their_name_answer.tattoo_shop)
+                
                             if var == true
                                 newappt.save
                                 anything_else
                             elsif 
                                 var == false
-                                appointment_details
+                                prompt.ask("Okay – Let's start over!")
+                                #search
                             end      
-end
+                     
+                elsif make_appt == false
+                    #other_options = ["Just checking out TattedPortal."]#Just checking out TattedPortal.make respondant method that exits out of program
+                    prompt.ask("Okay, no problem. Have a great one!")#code here for when artist is found in database but appt is not desired 
+                end
+            else 
+                prompt.ask("Hmm...")#first if correspondant
+                prompt.ask("We dont know 'em!")
+                help_search
+            end
+
+end#ends first if
+    
+
 
 def anything_else
     prompt = TTY::Prompt.new
