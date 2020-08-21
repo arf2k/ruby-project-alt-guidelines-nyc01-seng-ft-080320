@@ -1,7 +1,6 @@
 require 'pry'
 
 
-
 def welcoming_new_client
 prompt = TTY::Prompt.new(active_color: :red)
 
@@ -9,14 +8,16 @@ prompt = TTY::Prompt.new(active_color: :red)
      been_here_before = prompt.yes?("Have you been to TattedPortal before?")
     if been_here_before == true
         id_number = prompt.ask("Great – whats your client id:", required: true) 
+        #binding.pry
         existing_client = Client.all.find_by id: id_number
         Client.remember_current_client_id(id_number)
         Client.remember_current_client_instance(existing_client)
-        prompt.ask("Welcome back #{existing_client.name}") #configure option for when client cant be found
+        prompt.ask("Welcome back #{Client.current_client_instance}")
+        #binding.pry #configure option for when client cant be found
         menu_options                                          #also if they cant remember id
     elsif been_here_before == false  
         newclient = prompt.ask("No worries, we just need to set you up in our system. Can you give us your name?", required: true){|q| q.modify :capitalize}
-        created_new_client = Client.create(name:newclient)
+        created_new_client = Client.create(name: newclient)
         Client.remember_current_client_id(created_new_client.id)
         Client.remember_current_client_instance(created_new_client)
         #binding.pry
@@ -42,16 +43,6 @@ prompt = TTY::Prompt.new(active_color: :red)
     end
     
 end
-
-
-
-# Artist.all.select do |artists| 
-#     if artists.style == stylechosen
-#         artiststring << "#{artists.name} – Does #{artists.style} at #{artists.tattoo_shop.name} in #{artists.tattoo_shop.location}" 
-#         artistarray << artists
-#     end
-# end
-
 
 
 

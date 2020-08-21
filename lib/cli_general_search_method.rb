@@ -1,16 +1,12 @@
 def general_search
     prompt = TTY::Prompt.new
-        prompt.ask("Let us know how you'd like to filter your search.")
-        filter_options = ["Style", "Location", "Wanna get a piercing, too?"]
-        chosen_filter = prompt.select("How would you like to filter your search?",filter_options)
+        filter_options = ["Style", "Location"]
+        chosen_filter = prompt.select("Choose a search a option:",filter_options)
         if chosen_filter == filter_options[0]#style
             filter_by_style
     
         elsif chosen_filter == filter_options[1]#location
             filter_by_location
-    
-        elsif chosen_filter == filter_options[2]#does piercings
-            filter_by_piercings
         end
     
 end
@@ -18,7 +14,7 @@ end
 def filter_by_style
 prompt = TTY::Prompt.new
             
-    stylechosen = prompt.select("What kind of style are you looking for?", ["black work", "traditional", "new school", "tribal", "traditional", "no preference"])
+    stylechosen = prompt.select("What kind of style are you looking for?", ["black work", "traditional", "new school", "tribal"])
             
     artiststring = []
     artistarray = []
