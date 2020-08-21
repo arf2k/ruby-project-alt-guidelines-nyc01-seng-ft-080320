@@ -1,7 +1,7 @@
 def change_appointment 
     prompt = TTY::Prompt.new
 
-    client_appointments = Appointment.all.find_by client: Client.current_client 
+    client_appointments = Appointment.all.find_by client: Client.current_client_instance 
 
     prompt.ask("#{client_appointments.client.name}, we found your appointment on #{client_appointments.date} at #{client_appointments.tattoo_shop.name}")
     options = ["Change Appointment", "Cancel Appointment"]

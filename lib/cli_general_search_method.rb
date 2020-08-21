@@ -27,26 +27,18 @@ prompt = TTY::Prompt.new
     Artist.all.select do |artists| 
         if artists.style == stylechosen
                 artiststring << "#{artists.name} – Does #{artists.style} at #{artists.tattoo_shop.name} in #{artists.tattoo_shop.location}" 
-                artistarray << artists
-                current_client = Client.all.find_by
-                appointments << Appointment.new(client: Client.current_client, artist: artists, tattoo_shop: artists.tattoo_shop)
+                artistarray << artists.name
+                #current_client = Client.all.find_by
+                appointments << Appointment.new(client: Client.current_client_instance, artist: artists, tattoo_shop: artists.tattoo_shop)
                 #binding.pry
         end
     end
             
 
-            # prompt.collect do
-            #     new_date = key(:date).ask("What day should we set your new appointment?", required: true)
-            #     new_time = key(:time).ask("Got it. What time?", required: true)
-            #     new_description = key(:description).ask("Please verify the work you would like done by providing a description", required: true)
-            #     client_appointments.update(date: new_date, time: new_time, description: new_description)
-            #     prompt.ask("#{client_appointments.client.name}, we will now see you on #{new_date} at #{new_time} to get your #{new_description}")
-            #     end
-
-
         chosenartist = [] 
         appointments
         chosenartist = prompt.select("Here are some experts in that style. Choose one to make an appointment!", artistarray) 
+        make_an_appointment
 end
         
 def filter_by_location
@@ -71,6 +63,12 @@ prompt.ask("Location!")
          names_of_shops << eachshop.name
          #binding.pry
     end 
-    prompt.select("Here's a list of Tattoo Shops in #{selected_borough}", names_of_shops)
-
+    shop = prompt.select("Here's a list of Tattoo Shops in #{selected_borough}", names_of_shops)
+    make_appt_query = prompt.no?("Would you like to set up an appointment at #{shop}")
+    if make_appt_query == true
+        prompt.ask("Well, goodbye")
+    elsif make_appt_query == false
+        prompt.ask("Great – let's make an appointment!")
+        make_an_appointment
+    end
 end
