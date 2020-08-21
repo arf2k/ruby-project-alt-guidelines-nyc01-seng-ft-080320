@@ -9,10 +9,10 @@ prompt = TTY::Prompt.new(active_color: :red)
     if been_here_before == true
         id_number = prompt.ask("Great – whats your client id:", required: true) 
         #binding.pry
-        existing_client = Client.all.find_by id: id_number
+        existing_client = Client.all.find_by(id: id_number)
         Client.remember_current_client_id(id_number)
         Client.remember_current_client_instance(existing_client)
-        prompt.ask("Welcome back #{Client.current_client_instance}")
+        prompt.ask("Welcome back #{Client.current_client_instance.name}")
         #binding.pry #configure option for when client cant be found
         menu_options                                          #also if they cant remember id
     elsif been_here_before == false  
