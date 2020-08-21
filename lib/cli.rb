@@ -8,7 +8,7 @@ prompt = TTY::Prompt.new(active_color: :red)
      prompt.ask("Welcome to TattedPortal!")
      been_here_before = prompt.yes?("Have you been to TattedPortal before?")
     if been_here_before == true
-        id_number = prompt.ask("Great – whats your client id", required: true) 
+        id_number = prompt.ask("Great – whats your client id:", required: true) 
         existing_client = Client.all.find_by id: id_number
         Client.remember_current_client_id(id_number)
         Client.remember_current_client_instance(existing_client)
