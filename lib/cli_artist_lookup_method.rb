@@ -21,7 +21,7 @@ def artist_lookup
                         end
                         # var = prompt.yes?("Does this all check out with you?")
                 
-                        #     if var == true
+                        #     if var == truegit
                         #         newappt.save
                         #         anything_else
                         #     elsif 
