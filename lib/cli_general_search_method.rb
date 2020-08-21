@@ -39,7 +39,6 @@ end
         
 def filter_by_location
 prompt = TTY::Prompt.new
-prompt.ask("Location!")
 
     tatt_shop_locations = []
     TattooShop.all.map do |eachtattooshop|
@@ -62,7 +61,7 @@ prompt.ask("Location!")
     shop = prompt.select("Here's a list of Tattoo Shops in #{selected_borough}", names_of_shops)
     make_appt_query = prompt.no?("Would you like to set up an appointment at #{shop}")
     if make_appt_query == true
-        prompt.ask("Well, goodbye")
+        prompt.ask("Well,uh, okay then. Goodbye! ")
     elsif make_appt_query == false
         prompt.ask("Great – let's make an appointment!")
         make_an_appointment

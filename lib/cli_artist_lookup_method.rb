@@ -1,4 +1,4 @@
-def artist_lookup
+def artist_lookup 
     prompt = TTY::Prompt.new
     pastel = Pastel.new
     whats_their_name = ""
