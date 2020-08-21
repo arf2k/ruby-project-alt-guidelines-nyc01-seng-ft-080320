@@ -1,10 +1,11 @@
 require 'pry'
 
 
-def welcoming_new_client
+def welcoming_tatted_portal
 prompt = TTY::Prompt.new(active_color: :red)
 
      prompt.ask("Welcome to TattedPortal!")
+
      been_here_before = prompt.yes?("Have you been to TattedPortal before?")
     if been_here_before == true
         id_number = prompt.ask("Great – whats your client id:", required: true) 
@@ -12,6 +13,7 @@ prompt = TTY::Prompt.new(active_color: :red)
         existing_client = Client.all.find_by(id: id_number)
         Client.remember_current_client_id(id_number)
         Client.remember_current_client_instance(existing_client)
+        #binding.pry
         prompt.ask("Welcome back #{Client.current_client_instance.name}")
         #binding.pry #configure option for when client cant be found
         menu_options                                          #also if they cant remember id

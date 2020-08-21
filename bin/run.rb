@@ -1,7 +1,8 @@
 require_relative '../config/environment'
 
-welcoming_new_client
+ 
 
+welcoming_tatted_portal
 
 #hello
 
