@@ -28,20 +28,17 @@ puts "
      been_here_before = prompt.yes?("Have you been to TattedPortal before?")
     if been_here_before == true
         id_number = prompt.ask("Great – whats your client id:", required: true) 
-        #binding.pry
         existing_client = Client.all.find_by(id: id_number)
         Client.remember_current_client_id(id_number)
         Client.remember_current_client_instance(existing_client)
-        #binding.pry
         prompt.ask("Welcome back #{Client.current_client_instance.name}")
-        #binding.pry #configure option for when client cant be found
-        menu_options                                          #also if they cant remember id
+
+        menu_options                                          
     elsif been_here_before == false  
         newclient = prompt.ask("No worries, we just need to set you up in our system. Can you give us your name?", required: true){|q| q.modify :capitalize}
         created_new_client = Client.create(name: newclient)
         Client.remember_current_client_id(created_new_client.id)
         Client.remember_current_client_instance(created_new_client)
-        #binding.pry
         prompt.ask("Great! Welcome, #{newclient}! Your client id is #{created_new_client.id}. Please store your id number somewhere safe for the future! Let's get started.")
         menu_options
     end
